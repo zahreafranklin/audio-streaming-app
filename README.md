@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Documentation for Microphone Visualizer Audio Streaming App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This React application enables audio streaming between two users and visualizes the sound waves in real time. This project uses the WebRTC API for peer-to-peer audio streaming and the Web Audio API to manipulate and visualize the audio data.
 
-## Available Scripts
+## Project Structure
+Each file and it’s purpose is as follows:
 
-In the project directory, you can run:
+### App.js
+This is the main file of the application. Each component is rendered here.
 
-### `npm start`
+### Sender.js 
+This file handles the audio stream from the user’s microphone. It sends the sound to the receiver’s using WebRTC. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Receiver.js 
+This file receives the audio stream from the sender and uses the user’s speakers to play the sound.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Visualization.js 
+This visualizes the audio data in the form of a sound wave using the waveform from the Canvas API and the Web Audio API. 
 
-### `npm test`
+## App.js 
+The purpose of this is to render the main components (Sender, Receiver, and Visualization) and manages the overall layout.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Key Parts: 
+* Rendering Components: renders the Sender, Receiver and Visualization components to provide an interface for both users to send and receive audio streams. 
+* Styling and Layout: CSS was applied for layout and spacing.
 
-### `npm run build`
+## Sender.js: 
+The purpose of this was to capture the user’s audio from their microphone and send it to the receiver using a WebRTC connection. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Key Parts:
+* navigator.mediaDevices.getUserMedia : requests permission to access the user’s microphone and obtains the audio stream.
+* RTCPeerConnection : creates a new WebRTC connection for peer-to-peer communication. 
+* sendChannel.send(): sends the local audio stream to the receiver. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Receiver.js: 
+The purpose of this is for the audio stream that is sent by the sender to be received and plays it through the user’s speaker.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Key Parts: 
+* RTCPeerConnection : create a WebRTC connection to receive the audio stream from the sender.
+* pc.setRemoteDescription() : sets the remote description received from sender to establish a connection. 
+* on track Event Handler: listens for the incoming audio track and sets it as the source for an <audio? element to play the audio. 
 
-### `npm run eject`
+## Visualization.js: 
+The purpose of this is to add a visualizer for the audio in the form of a real-time sound wave. 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Key Parts: 
+* useRef() : creates references to the canvas and the AnalyserNode.
+* requestAnimationFrame(draw) : continuously calls the draw function to update the waveform. 
+* canvas API : uses the Canvas API to create a waveform  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
